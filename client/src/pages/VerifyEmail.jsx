@@ -12,7 +12,7 @@ const VerifyEmail = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const login = useAuthStore((state) => state.login);
-    
+
     // Get email from navigation state or prompt user if not available
     const email = location.state?.email;
 
@@ -37,9 +37,21 @@ const VerifyEmail = () => {
             const response = await apiClient.post('/verify-email', { email, verificationCode: code });
             setSuccess(response.data.message);
             login(response.data.user, response.data.token);
+
             setTimeout(() => {
-                navigate('/dashboard');
-            }, 2000); // Redirect after 2 seconds
+                const role = response.data.user?.role;
+                console.log(role);
+                if (role === 'student') {
+                    navigate('/student/dashboard');
+                } else if (role === 'instructor') {
+                    navigate('/instructor/dashboard');
+                } else if (role === 'admin') {
+                    navigate('/admin/dashboard');
+                } else {
+                    navigate('/unauthorized');
+                }
+            }, 2000);
+            // Redirect after 2 seconds
         } catch (err) {
             setError(err.response?.data?.message || 'An error occurred during verification.');
         } finally {

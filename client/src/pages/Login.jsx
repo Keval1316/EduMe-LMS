@@ -18,8 +18,17 @@ const Login = () => {
         setLoading(true);
         try {
             const response = await apiClient.post('/login', { email, password });
-            login(response.data.user, response.data.token);
-            navigate('/dashboard');
+            const user = response.data.user;
+            const token = response.data.token;
+            console.log(user.role)
+            login(user, token);
+            if (user.role === 'student') {
+                navigate('/student/dashboard');
+            } else if (user.role === 'instructor') {
+                navigate('/instructor/dashboard');
+            } else {
+                navigate('/admin/dashboard'); 
+            }
         } catch (err) {
             setError(err.response?.data?.message || 'An error occurred during login.');
         } finally {
@@ -43,7 +52,7 @@ const Login = () => {
                         <input id="password" name="password" type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                     </div>
                 </div>
-                 <div className="flex items-center justify-end">
+                <div className="flex items-center justify-end">
                     <div className="text-sm">
                         <Link to="/forgot-password" className="font-medium text-indigo-600 hover:text-indigo-500">
                             Forgot your password?
@@ -56,13 +65,16 @@ const Login = () => {
                     </button>
                 </div>
             </form>
-             <div className="mt-6 text-center">
+            <div className="mt-6 text-center">
                 <p className="text-sm">
                     Don't have an account?{' '}
                     <Link to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
                         Sign up
                     </Link>
                 </p>
+                <Link to="/" className="mt-4 text-sm text-blue-600 hover:underline">
+                    ← Back to Home
+                </Link>
             </div>
         </AuthLayout>
     );
