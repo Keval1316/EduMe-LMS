@@ -1,8 +1,9 @@
+// models/Progress.js
 import mongoose from "mongoose";
 
 const progressSchema = new mongoose.Schema(
   {
-    user: {
+    student: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -18,13 +19,16 @@ const progressSchema = new mongoose.Schema(
         ref: "Lecture",
       },
     ],
+    lastAccessed: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-progressSchema.index({ user: 1, course: 1 }, { unique: true }); // One progress doc per course per user
+// Ensure unique (student + course)
+progressSchema.index({ student: 1, course: 1 }, { unique: true });
 
 const Progress = mongoose.model("Progress", progressSchema);
 export default Progress;

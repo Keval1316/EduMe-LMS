@@ -1,5 +1,5 @@
 import express from "express";
-import { protect, restrictTo } from "../middlewares/authMiddleware.js";
+import { protect, restrictTo } from "../middleware/authMiddleware.js";
 import { addQuizToSection, deleteQuiz, getQuizzesBySection, updateQuiz } from "../controllers/quizController.js";
 
 const router = express.Router({ mergeParams: true });

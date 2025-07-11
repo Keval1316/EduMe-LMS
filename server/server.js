@@ -5,6 +5,7 @@ import { connectDB } from "./config/db.js";
 import cookieParser from "cookie-parser";
 import authRoutes from './routes/authRoutes.js';
 import instructorRoutes from "./routes/instructorRoutes.js";
+import studentRoutes from "./routes/studentRoutes.js";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use("/api/instructor", instructorRoutes);
+app.use("/api/student", studentRoutes);
 
 
 

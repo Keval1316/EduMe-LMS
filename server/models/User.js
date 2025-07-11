@@ -24,8 +24,21 @@ const userSchema = new mongoose.Schema(
         role: {
             type: String,
             enum: ["student", "instructor", "admin"],
-            required:true,
+            required: true,
             default: "student",
+        },
+        avatar: {
+            type: String,
+            default: "", // Cloudinary or local path
+        },
+        bio: {
+            type: String,
+            default: "",
+        },
+        socialLinks: {
+            linkedin: { type: String, default: "" },
+            twitter: { type: String, default: "" },
+            github: { type: String, default: "" },
         },
         isVerified: {
             type: Boolean,

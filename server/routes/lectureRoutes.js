@@ -1,6 +1,6 @@
 import express from "express";
-import { protect, restrictTo } from "../middlewares/authMiddleware.js";
-import { addLecture, deleteLecture, getLecturesBySection } from "../controllers/lectureController.js";
+import { protect, restrictTo } from "../middleware/authMiddleware.js";
+import { addLecture, deleteLecture, getLecturesBySection, updateLecture } from "../controllers/lectureController.js";
 import { getCourseReviews } from "../controllers/reviewController.js";
 
 const router = express.Router({ mergeParams: true });

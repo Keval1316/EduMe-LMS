@@ -1,6 +1,6 @@
 import express from "express";
-import { addSection, deleteSection, updateSection } from "../controllers/sectionController.js";
-import { protect, restrictTo } from "../middlewares/authMiddleware.js";
+import { addSection, deleteSection, getSectionsByCourse, updateSection } from "../controllers/sectionController.js";
+import { protect, restrictTo } from "../middleware/authMiddleware.js";
 import lectureRoutes from "./lectureRoutes.js";
 import quizRoutes from "./quizRoutes.js";
 

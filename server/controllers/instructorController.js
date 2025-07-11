@@ -244,3 +244,61 @@ export const getInstructorDashboardStats = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
+
+export const getAllCourseReviews = async (req, res) => {
+  const { courseId } = req.params;
+
+  const reviews = await Review.find({ course: courseId })
+    .populate("student", "name avatar")
+    .sort({ createdAt: -1 });
+
+  res.status(200).json(reviews);
+};
+
+export const searchCourses = async (req, res) => {
+  const {
+    query = "",
+    category,
+    level,
+    minRating,
+  } = req.query;
+
+  const searchQuery = {
+    $and: [],
+  };
+
+  // Full-text search
+  if (query.trim()) {
+    searchQuery.$and.push({
+      $text: { $search: query },
+    });
+  }
+
+  // Filters
+  if (category) {
+    searchQuery.$and.push({ category });
+  }
+
+  if (level) {
+    searchQuery.$and.push({ level });
+  }
+
+  if (minRating) {
+    searchQuery.$and.push({ averageRating: { $gte: Number(minRating) } });
+  }
+
+  if (searchQuery.$and.length === 0) {
+    delete searchQuery.$and;
+  }
+
+  const courses = await Course.find(searchQuery, {
+    score: { $meta: "textScore" },
+  })
+    .sort({ score: { $meta: "textScore" } })
+    .limit(20)
+    .populate("instructor", "name");
+
+  res.status(200).json(courses);
+};
