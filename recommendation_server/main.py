@@ -22,17 +22,18 @@ load_dotenv(dotenv_path=env_path)
 app = FastAPI()
 
 # CORS (Cross-Origin Resource Sharing) middleware
-# This allows your React frontend to communicate with this FastAPI backend
-origins = [
-    "http://localhost:3000",  # Original assumption
-    "http://localhost:3001",
-    "http://localhost:5173",  # Your frontend's actual address
-    "http://127.0.0.1:5173",  # Vite may bind on 127.0.0.1
+# Explicitly allow production + local dev, and any Vercel preview domain
+allowed_origins = [
+    "https://edume-lms.vercel.app",  # Production frontend
+    "http://localhost:5173",         # Vite dev
+    "http://127.0.0.1:5173",         # Vite dev alt
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=allowed_origins,
+    # Allow ANY Vercel preview domain, e.g. https://<hash>-<project>.vercel.app
+    allow_origin_regex=r"^https://.*\\.vercel\\.app$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
