@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+/** @type {import('tailwindcss').Config} */
+
+/* Tailwind v4: define theme tokens so primary-* utilities work globally */
+@theme {
+  --color-primary-50:  #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+}
+
+  /* theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
+        }
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      }
+    },
+  },
+  plugins: [],
+} */
+/* 
+@tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* Custom styles */
+:root{
+  --color-primary-50:#eff6ff;
+  --color-primary-100:#dbeafe;
+  --color-primary-200:#bfdbfe;
+  --color-primary-300:#93c5fd;
+  --color-primary-400:#60a5fa;
+  --color-primary-500:#3b82f6;
+  --color-primary-600:#2563eb;
+  --color-primary-700:#1d4ed8;
+  --color-primary-800:#1e40af;
+  --color-primary-900:#1e3a8a;
+}
+@layer components {
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Video player customization */
+.react-player > video {
+  object-fit: contain;
+}
+
+/* Focus styles */
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+/* Loading animations */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 200ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.hover-lift { transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1); }
+.hover-lift:hover { transform: translateY(-2px); }
+
+/* Print styles for certificates */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}
+@keyframes fall-star {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-300px, 100vh); /* Diagonal from top-right to bottom-left */
+    opacity: 0;
+  }
+}
+
+.animate-fall-star {
+  animation-name: fall-star;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+/* Tailwind is already handling this. But for custom styles: */
+.text-blue-700 {
+  animation: pulseColor 2.5s infinite;
+}
+
+@keyframes pulseColor {
+  0%, 100% { color: #1D4ED8; } /* Blue-700 */
+  50% { color: #2563EB; } /* Blue-600 */
+}
